@@ -1,7 +1,6 @@
 
 import { openDB } from 'idb';
 
-// We will define a global constant for our database name so we don't mess it up anywhere
 const DB_NAME = "jate"
 
 const initdb = async () =>
@@ -16,18 +15,11 @@ const initdb = async () =>
     },
   });
 
-/*
-  We need to add some code below which will take updated content and save it to IndexedDB.
-*/
 export const putDb = async (content) => {
-  // First, create a variable, and set it to asyncronously await the opening of the database. Replace the items in all caps
-  // TODO: Change YOUR_OPEN_DB_VAR to whatever variable name you wanT. Note that you'll then need to change any other occcurences of YOUR_OPEN_DB_VAR to the same variable name.
   const dbOpening = await openDB(DB_NAME, 1);
 
-  // TODO: Now create a variable for the transaction; again, this will be referenced below.
   const transaction = dbOpening.transaction(DB_NAME, 'readwrite');
 
-  // TODO: Now create a variable for the store
   const store = transaction.objectStore(DB_NAME);
 
   const request = store.put({ id: 1, value: content });
