@@ -25,10 +25,18 @@ module.exports = () => {
         inject: true,
         name: 'Just Another Text Editor',
         short_name: 'J.A.T.E',
-        description: 'This is an app that creates a text editor, so have fun!',
+        description: 'This app is a text editor that you can write code or notes in.',
         background_color: '#225ca3',
-        theme_color: '#225ca3'
-      
+        theme_color: '#225ca3',
+        start_url: '/',
+        publicPath: '/',
+        icons: [
+          {
+            src: path.resolve('src/images/logo.png'),
+            sizes: [96, 128, 192, 256, 384, 512],
+            destination: path.join('assets', 'icons'),
+          },
+        ]
       }),
       new InjectManifest({
         swSrc: './src-sw.js',
@@ -82,24 +90,26 @@ module.exports = () => {
   
         When all three plugins are configured this work is done.
       */
-
-
     ],
 
     module: {
       rules: [
-
-        /*
-          TODO: In this array, we need to configure the rules 
-          for when Webpack should "bundle-ize" our files. Each rule 
-          is an object. We will be setting up two rules. 
-          
-          You will find both rules in the solution for the mini 
-          project. 
-
-          When you copy and paste them below, you'll be done here.
-        */
-
+        {
+          test: /\.css$/i,
+          use: ['style-loader', 'css-loader'],
+        },
+        {
+          test: /\.m?js$/,
+          exclude: /node_modules/,
+          // We use babel-loader in order to use ES6.
+          use: {
+            loader: 'babel-loader',
+            options: {
+              presets: ['@babel/preset-env'],
+              plugins: ['@babel/plugin-proposal-object-rest-spread', '@babel/transform-runtime'],
+            },
+          },
+        },
       ],
     },
   };
